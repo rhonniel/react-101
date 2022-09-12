@@ -5,23 +5,29 @@ import React, { useState } from "react";
 
 function Expenses(props){
 
-    const products = [];
-    const [selectedYear,setSelectedYear] = useState('');
-    props.products.forEach(product => {
-        products.push( <ExpenseItem key={product.title} title={product.title} amount={product.amount} date={product.date} ></ExpenseItem>)
-    });
 
+    const [selectedYear,setSelectedYear] = useState('All');
+    const [itemsFiltered,SetItemsFiltered] = useState(props.products);
+  
     const selectedYearHandler= (filerYearValue) => {
         setSelectedYear(filerYearValue);
-        console.log(selectedYear)
+        SetItemsFiltered(props.products.filter(expense =>  new Date(expense.date).getFullYear() ==filerYearValue || filerYearValue==='All'  ));
     }
 
     return (
-        
       <div className="Expenses">
-               <ExpensesFilter onSelectedYear={selectedYearHandler}/>
-          {products}
+               <ExpensesFilter  selected={selectedYear} onSelectedYear={selectedYearHandler}/>
+
+          {itemsFiltered.map(expense => 
+          <ExpenseItem 
+          key= {expense.id}
+          title={expense.title} 
+          amount={expense.amount} 
+          date={expense.date}
+          /> )}
+
       </div>
+  
 
     );
 }

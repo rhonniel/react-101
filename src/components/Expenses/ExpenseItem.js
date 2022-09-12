@@ -2,7 +2,7 @@ import './ExpenseItem.css';
 import ExpenseDate from './ExpenseDate';
 
 function ExpenseItem(props){
- let op =props.title;
+
  
     const clickHandler = () =>{
         console.log('KLK')
